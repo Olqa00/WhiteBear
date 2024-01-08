@@ -1,0 +1,6 @@
+@WhiteBear.WebApi_HostAddress = http://localhost:5279
+
+GET {{WhiteBear.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
