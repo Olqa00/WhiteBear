@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using WhiteBear.Application;
 using WhiteBear.Application.Books.Commands;
+using WhiteBear.Application.Bookshelf.Queries;
 using WhiteBear.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,8 +21,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapPost("/books", async ([FromBody] AddBook command, [FromServices] IMediator mediator, CancellationToken cancellationToken = default) => await mediator.Send(command, cancellationToken))
+app.MapPost("/books", async ([FromBody] AddBook command, [FromServices] IMediator mediator, 
+        CancellationToken cancellationToken = default) => await mediator.Send(command, cancellationToken))
 .WithName("AddBook")
 .WithOpenApi();
 
+app.MapGet("/bookshelf", async ([FromServices] IMediator mediator,
+        CancellationToken cancellationToken = default) => await mediator.Send(new GetBooksOnBookshelf(), cancellationToken))
+    .WithName("GetBooks")
+    .WithOpenApi();
 await app.RunAsync();

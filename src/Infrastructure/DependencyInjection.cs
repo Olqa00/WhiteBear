@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography.X509Certificates;
 using Microsoft.EntityFrameworkCore;
-using WhiteBear.Infrastructure.EFCore;
+using WhiteBear.Infrastructure.EntityFrameworkCore;
 using WhiteBear.Infrastructure.EntityFrameworkCore;
 
 namespace WhiteBear.Infrastructure;

@@ -1,12 +1,13 @@
-﻿namespace WhiteBear.Infrastructure.EFCore;
+﻿namespace WhiteBear.Infrastructure.EntityFrameworkCore;
 
 using Microsoft.EntityFrameworkCore;
-using WhiteBear.Infrastructure.EFCore.DbEntities;
+using WhiteBear.Infrastructure.EntityFrameworkCore.DbEntities;
 
 internal class BookContext(DbContextOptions<BookContext> options) : DbContext(options)
 {
     public DbSet<BookDbEntity> Books { get; set; }
     public DbSet<AuthorDbEntity> Authors { get; set; }
+    public DbSet<BookshelfDbEntity> Bookshelfs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -15,6 +16,9 @@ internal class BookContext(DbContextOptions<BookContext> options) : DbContext(op
 
         modelBuilder.Entity<AuthorDbEntity>()
             .HasKey(author => author.RecordId);
+
+        modelBuilder.Entity<BookshelfDbEntity>()
+            .HasKey(book => book.RecordId);
 
         modelBuilder.Entity<BookDbEntity>()
             .HasMany(e => e.Authors)

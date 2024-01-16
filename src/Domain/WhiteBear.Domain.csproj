@@ -10,8 +10,4 @@
     <Using Include="WhiteBear.Domain.Types" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
-
 </Project>

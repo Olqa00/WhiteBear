@@ -1,4 +1,4 @@
-﻿namespace WhiteBear.Infrastructure.EFCore.DbEntities;
+﻿namespace WhiteBear.Infrastructure.EntityFrameworkCore.DbEntities;
 
 internal class AuthorDbEntity
 {

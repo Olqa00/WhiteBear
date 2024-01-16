@@ -3,7 +3,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using WhiteBear.Domain.Interfaces;
-using WhiteBear.Infrastructure.EFCore;
 using WhiteBear.Infrastructure.EntityFrameworkCore.Services;
 
 namespace WhiteBear.Infrastructure.EntityFrameworkCore;

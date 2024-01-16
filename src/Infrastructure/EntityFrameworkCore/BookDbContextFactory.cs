@@ -3,7 +3,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Migrations;
-using WhiteBear.Infrastructure.EFCore;
+using WhiteBear.Infrastructure.EntityFrameworkCore;
 
 internal sealed class BookDbContextFactory : IDesignTimeDbContextFactory<BookContext>
 {

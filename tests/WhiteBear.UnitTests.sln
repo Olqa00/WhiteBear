@@ -11,6 +11,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhiteBear.Application.UnitT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhiteBear.Application", "..\src\Application\WhiteBear.Application.csproj", "{E5FA9984-D149-4EF2-98BD-AA642B4DBFD5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhiteBear.Infrastructure.UnitTests", "Infrastructure.UnitTests\WhiteBear.Infrastructure.UnitTests.csproj", "{DBA99CD2-2E75-4EDA-978B-A0BAB1B076E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhiteBear.Infrastructure", "..\src\Infrastructure\WhiteBear.Infrastructure.csproj", "{7CA461F2-C37C-415E-8E1A-28365F365C78}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhiteBear.WebApi.UnitTests", "WebApi.UnitTests\WhiteBear.WebApi.UnitTests.csproj", "{1FC0638C-5F68-4DF7-8D9C-CFEE12F974AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhiteBear.WebApi", "..\src\WebApi\WhiteBear.WebApi.csproj", "{780915DB-8D52-465B-B69F-1B46F9F4E8BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +44,21 @@ Global
 		{E5FA9984-D149-4EF2-98BD-AA642B4DBFD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5FA9984-D149-4EF2-98BD-AA642B4DBFD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5FA9984-D149-4EF2-98BD-AA642B4DBFD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBA99CD2-2E75-4EDA-978B-A0BAB1B076E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBA99CD2-2E75-4EDA-978B-A0BAB1B076E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBA99CD2-2E75-4EDA-978B-A0BAB1B076E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBA99CD2-2E75-4EDA-978B-A0BAB1B076E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CA461F2-C37C-415E-8E1A-28365F365C78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CA461F2-C37C-415E-8E1A-28365F365C78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CA461F2-C37C-415E-8E1A-28365F365C78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CA461F2-C37C-415E-8E1A-28365F365C78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FC0638C-5F68-4DF7-8D9C-CFEE12F974AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FC0638C-5F68-4DF7-8D9C-CFEE12F974AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FC0638C-5F68-4DF7-8D9C-CFEE12F974AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FC0638C-5F68-4DF7-8D9C-CFEE12F974AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{780915DB-8D52-465B-B69F-1B46F9F4E8BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{780915DB-8D52-465B-B69F-1B46F9F4E8BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{780915DB-8D52-465B-B69F-1B46F9F4E8BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{780915DB-8D52-465B-B69F-1B46F9F4E8BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
