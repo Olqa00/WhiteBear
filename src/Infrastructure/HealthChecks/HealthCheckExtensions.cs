@@ -20,28 +20,24 @@ public static class HealthCheckExtensions
         };
 
         string json = JsonSerializer.Serialize(
-            new
+        new
+        {
+            Status = report.Status.ToString(),
+            Duration = report.TotalDuration,
+            Info = report.Entries
+            .Select(entry => new
             {
-                Status = report.Status.ToString(),
-                Duration = report.TotalDuration,
-                Info = report.Entries
-                    .Select(e =>
-                        new
-                        {
-                            e.Key,
-                            e.Value.Description,
-                            e.Value.Duration,
-                            Status = Enum.GetName(
-                                typeof(HealthStatus),
-                                e.Value.Status),
-                            Error = e.Value.Exception?.Message,
-                            e.Value.Data,
-                        })
-                    .ToList()
-            },
-            jsonSerializerOptions);
+                entry.Key,
+                entry.Value.Description,
+                entry.Value.Duration,
+                Status = Enum.GetName(typeof(HealthStatus), entry.Value.Status),
+                Error = entry.Value.Exception?.Message,
+                entry.Value.Data,
+            })
+        }, 
+        jsonSerializerOptions);
 
-            context.Response.ContentType = MediaTypeNames.Application.Json;
-            return context.Response.WriteAsync(json);
-        }
+        context.Response.ContentType = MediaTypeNames.Application.Json;
+        return context.Response.WriteAsync(json);
+    }
 }
