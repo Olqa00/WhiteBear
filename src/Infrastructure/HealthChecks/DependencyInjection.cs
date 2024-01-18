@@ -9,7 +9,8 @@ internal static class DependencyInjection
     public static IServiceCollection AddHealthChecks(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddHealthChecks()
-            .AddDbContextCheck<BookContext>();
+            .AddDbContextCheck<BookContext>()
+            .AddCheck<TestHealthCheck>("test");
 
         return services;
     }

@@ -1,10 +1,12 @@
 using MediatR;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.AspNetCore.Mvc;
 using WhiteBear.Application;
 using WhiteBear.Application.Books.Commands;
 using WhiteBear.Application.Bookshelf.Queries;
 using WhiteBear.Infrastructure;
+using WhiteBear.Infrastructure.HealthChecks;
 using WhiteBear.WebApi.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,7 +39,10 @@ builder.Services.AddExceptionHandler<ExceptionsHandler>();
 var app = builder.Build();
 
 app.UseHttpLogging();
-app.MapHealthChecks("/health");
+app.MapHealthChecks("/health", new HealthCheckOptions()
+{
+    ResponseWriter = HealthCheckExtensions.WriteResponse
+});
 
 if (app.Environment.IsDevelopment())
 {
