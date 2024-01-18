@@ -1,21 +1,25 @@
 ﻿namespace WhiteBear.Application.UnitTests;
 
+using FluentValidation.TestHelper;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using NSubstitute.ExceptionExtensions;
+using NSubstitute;
 using Substitute = NSubstitute.Substitute;
+using WhiteBear.Application.Books.CommandHandlers;
+using WhiteBear.Application.Books.Commands;
 using WhiteBear.Application.Books.Events;
 using WhiteBear.Application.Bookshelf.CommandHandlers;
 using WhiteBear.Application.Bookshelf.Commands;
-using WhiteBear.Application.Books.CommandHandlers;
-using WhiteBear.Application.Books.Commands;
 using WhiteBear.Application.Bookshelf.EventHandlers;
+using WhiteBear.Application.Validators;
 using WhiteBear.Domain.Entities;
+using WhiteBear.Domain.Exceptions;
 using WhiteBear.Domain.Interfaces;
 using WhiteBear.Domain.Types;
-using WhiteBear.Domain.Exceptions;
-using NSubstitute;
+using WhiteBear.Application.Common.Exceptions;
+using ValidationException = Common.Exceptions.ValidationException;
+using System.ComponentModel.DataAnnotations;
 
 [TestClass]
 public class AddBookTests
@@ -180,57 +184,31 @@ public class AddBookTests
             ;
     }
 
+
     [TestMethod]
-    public async Task Should_Throw_Exception_When_Title_Null()
+    public async Task Should_Throw_Validation_Exception_When_Isbn_Null()
     {
         // Arrange
         var command = new AddBook
         {
             Authors = AUTHORS,
             Cover = COVER,
-            Isbn = ISBN,
-            Title = NULL_STRING,
+            Isbn = "123",
+            Title = TITLE,
         };
 
-        var repository = Substitute.For<IBookRepository>();
-        var sut = Substitute.For<IPublisher>();
-        var handler = new AddBookHandler(this.logger, sut, repository);
+        //var repository = Substitute.For<IBookRepository>();
+        //var sut = Substitute.For<IPublisher>();
+        //var handler = new AddBookHandler(this.logger, sut, repository);
+        var validator = new AddBookValidator();
 
         // Act
-        //var action = await handler.Handle(command, CancellationToken.None);
+        //await Assert.ThrowsExceptionAsync<ValidationException>(()
+        //        => handler.Handle(command, CancellationToken.None))
+        //    ;
+        var result = validator.TestValidate(command);
 
         // Assert
-        //sut.Should()
-        //    .Received(1)
-        //    .ReturnsForAnyArgs(Arg.Any<EmptyTitleException>())
-        //    ;
-
-        // Act & Assert
-        await Assert.ThrowsExceptionAsync<EmptyTitleException>(() 
-            => handler.Handle(command, CancellationToken.None))
-            ;
-
+        result.ShouldHaveValidationErrorFor(book => book.Isbn);
     }
-
-    //[DataTestMethod, DataRow(""), DataRow("832041981"), DataRow("832041981Y"), DataRow("83204198160")]
-    //public async Task Should_Throw_Exception_When_ISBN_Valid(string value)
-    //{
-    //    // Arrange
-    //    var command = new AddBook
-    //    {
-    //        Authors = AUTHORS,
-    //        Cover = COVER,
-    //        Isbn = value,
-    //        Title = TITLE,
-    //    };
-
-    //    var repository = Substitute.For<IBookRepository>();
-    //    var sut = Substitute.For<IPublisher>();
-    //    var handler = new AddBookHandler(this.logger, sut, repository);
-
-    //    // Act & Assert
-    //    await Assert.ThrowsExceptionAsync<IncorrectIsbnException>(()
-    //            => handler.Handle(command, CancellationToken.None))
-    //        ;
-    //}
 }

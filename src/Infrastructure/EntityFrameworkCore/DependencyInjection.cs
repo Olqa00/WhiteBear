@@ -1,11 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿namespace WhiteBear.Infrastructure.EntityFrameworkCore;
+
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using WhiteBear.Domain.Interfaces;
 using WhiteBear.Infrastructure.EntityFrameworkCore.Services;
-
-namespace WhiteBear.Infrastructure.EntityFrameworkCore;
 
 internal static class DependencyInjection
 {
@@ -20,6 +20,7 @@ internal static class DependencyInjection
         });
 
         services.AddScoped<IBookRepository, BookRepository>();
+        services.AddScoped<IAuthorRepository, AuthorRepository>();
 
         return services;
     }

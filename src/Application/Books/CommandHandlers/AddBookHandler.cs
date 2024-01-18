@@ -1,11 +1,10 @@
 namespace WhiteBear.Application.Books.CommandHandlers;
 
-using FluentValidation.Results;
+using System.Reflection.Metadata;
 using WhiteBear.Application.Books.Commands;
 using WhiteBear.Application.Books.Events;
-using WhiteBear.Application.Validators;
+using WhiteBear.Application.Common.Extensions;
 using WhiteBear.Domain.Entities;
-using WhiteBear.Domain.Exceptions;
 using WhiteBear.Domain.Interfaces;
 
 internal sealed class AddBookHandler : IRequestHandler<AddBook>
@@ -19,16 +18,14 @@ internal sealed class AddBookHandler : IRequestHandler<AddBook>
 
     public async Task Handle(AddBook request, CancellationToken cancellationToken)
     {
+        using var loggedScope = this.logger.BeginPropertyScope(
+            ("RequestType", "Command")
+            );
+
+        this.logger.LogInformation("Try to upsert customer");
+
         var isbn = new Isbn(request.Isbn);
         var entity = new BookEntity(isbn, request.Title, request.Cover);
-
-        AddBookValidator bookvalidator = new AddBookValidator();
-        ValidationResult bookResults = bookvalidator.Validate(entity);
-
-        if (!bookResults.IsValid)
-        {
-            throw new EmptyTitleException(nameof(entity.Title));
-        }
 
         foreach (var author in request.Authors)
         {
@@ -40,10 +37,9 @@ internal sealed class AddBookHandler : IRequestHandler<AddBook>
             entity.AddAuthor(authorEntity);
         }
 
-        this.logger.LogInformation("Creating Book");
-
+        this.logger.LogInformation("Creating '{Isbn}' Book", request.Isbn);
         await this.repository.CreateAsync(entity, cancellationToken);
-        this.logger.LogInformation("Created Book");
+        this.logger.LogInformation("Created '{Isbn}' Book ", request.Isbn);
 
         var @event = new BookAdded
         {
@@ -51,5 +47,6 @@ internal sealed class AddBookHandler : IRequestHandler<AddBook>
         };
 
         await mediator.Publish(@event, cancellationToken);
+        this.logger.LogInformation("Event '{Isbn}' published", request.Isbn);
     }
 }

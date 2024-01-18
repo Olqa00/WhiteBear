@@ -8,6 +8,10 @@
 		<IsTestProject>true</IsTestProject>
 	</PropertyGroup>
 
+	<PropertyGroup>
+		<NoWarn>S2699;</NoWarn>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<Using Include="FluentAssertions" />
 		<Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />

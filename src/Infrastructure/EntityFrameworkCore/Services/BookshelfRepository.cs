@@ -1,11 +1,10 @@
-﻿using WhiteBear.Infrastructure.EntityFrameworkCore.DbEntities;
-
-namespace WhiteBear.Infrastructure.EntityFrameworkCore.Services;
+﻿namespace WhiteBear.Infrastructure.EntityFrameworkCore.Services;
 
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 using WhiteBear.Domain.Interfaces;
+using WhiteBear.Infrastructure.EntityFrameworkCore.DbEntities;
 
 internal sealed class BookshelfRepository : IBookshelfRepository
 {

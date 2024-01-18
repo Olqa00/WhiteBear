@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace WhiteBear.Infrastructure.EntityFrameworkCore.Migrations
+namespace WhiteBear.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class Init : Migration
@@ -33,11 +33,25 @@ namespace WhiteBear.Infrastructure.EntityFrameworkCore.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BookId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IsbnNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Cover = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Books", x => x.RecordId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Bookshelfs",
+                columns: table => new
+                {
+                    RecordId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BookQuantity = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bookshelfs", x => x.RecordId);
                 });
 
             migrationBuilder.CreateTable(
@@ -75,6 +89,9 @@ namespace WhiteBear.Infrastructure.EntityFrameworkCore.Migrations
         {
             migrationBuilder.DropTable(
                 name: "BookAuthors");
+
+            migrationBuilder.DropTable(
+                name: "Bookshelfs");
 
             migrationBuilder.DropTable(
                 name: "Authors");

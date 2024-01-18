@@ -32,7 +32,7 @@ internal sealed class AddAuthorToBookHandler : IRequestHandler<AddAuthorToBook>
             Name = request.Name,
         };
 
-        book.AddAuthor(authorEntity);
+        book!.AddAuthor(authorEntity);
 
         await this.repository.UpdateAsync(book, cancellationToken);
     }
