@@ -1,12 +1,10 @@
 using MediatR;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.AspNetCore.Mvc;
 using WhiteBear.Application;
 using WhiteBear.Application.Books.Commands;
 using WhiteBear.Application.Bookshelf.Queries;
 using WhiteBear.Infrastructure;
-using WhiteBear.Infrastructure.HealthChecks;
 using WhiteBear.WebApi.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,16 +37,6 @@ builder.Services.AddExceptionHandler<ExceptionsHandler>();
 var app = builder.Build();
 
 app.UseHttpLogging();
-app.MapHealthChecks("/health", new HealthCheckOptions()
-{
-    ResponseWriter = HealthCheckExtensions.WriteResponse
-});
-
-app.MapHealthChecks("/health/test", new HealthCheckOptions
-{
-    Predicate = healthCheck => healthCheck.Name == "test",
-    ResponseWriter = HealthCheckExtensions.WriteResponse
-});
 
 if (app.Environment.IsDevelopment())
 {
@@ -57,6 +45,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseExceptionHandler();
+app.MapInfrastructure();
 
 app.MapPost("/books", async ([FromBody] AddBook command, [FromServices] IMediator mediator, 
         CancellationToken cancellationToken = default) => await mediator.Send(command, cancellationToken))

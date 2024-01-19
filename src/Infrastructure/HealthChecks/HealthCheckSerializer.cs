@@ -6,21 +6,17 @@ using System.Text.Json;
 
 namespace WhiteBear.Infrastructure.HealthChecks;
 
-public static class HealthCheckExtensions
+public static class HealthCheckSerializer
 {
-    public static Task WriteResponse(
-        HttpContext context,
-        HealthReport report)
+    public static Task WriteResponse(HttpContext context, HealthReport report)
     {
-        var jsonSerializerOptions = new JsonSerializerOptions
+        var options = new JsonSerializerOptions
         {
-            WriteIndented = false,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true,
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
         };
 
-        string json = JsonSerializer.Serialize(
-        new
+        var data = new
         {
             Status = report.Status.ToString(),
             Duration = report.TotalDuration,
@@ -34,8 +30,9 @@ public static class HealthCheckExtensions
                 Error = entry.Value.Exception?.Message,
                 entry.Value.Data,
             })
-        }, 
-        jsonSerializerOptions);
+        };
+
+        string json = JsonSerializer.Serialize(data, options);
 
         context.Response.ContentType = MediaTypeNames.Application.Json;
         return context.Response.WriteAsync(json);
