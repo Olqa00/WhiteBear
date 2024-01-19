@@ -1,5 +1,6 @@
 ﻿namespace WhiteBear.Infrastructure;
 
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WhiteBear.Domain.Interfaces;
@@ -23,5 +24,10 @@ public static class DependencyInjection
         services.AddScoped<IBookshelfReadService, BookshelfReadService>();
 
         return services;
+    }
+
+    public static void MapInfrastructure(this IEndpointRouteBuilder app)
+    {
+        app.MapHealthChecks();
     }
 }

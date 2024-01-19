@@ -37,7 +37,6 @@ builder.Services.AddExceptionHandler<ExceptionsHandler>();
 var app = builder.Build();
 
 app.UseHttpLogging();
-app.MapHealthChecks("/health");
 
 if (app.Environment.IsDevelopment())
 {
@@ -46,6 +45,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseExceptionHandler();
+app.MapInfrastructure();
 
 app.MapPost("/books", async ([FromBody] AddBook command, [FromServices] IMediator mediator, 
         CancellationToken cancellationToken = default) => await mediator.Send(command, cancellationToken))
