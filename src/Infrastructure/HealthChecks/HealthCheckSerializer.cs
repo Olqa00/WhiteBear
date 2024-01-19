@@ -6,7 +6,7 @@ using System.Text.Json;
 
 namespace WhiteBear.Infrastructure.HealthChecks;
 
-public static class HealthCheckSerializer
+internal static class HealthCheckSerializer
 {
     public static Task WriteResponse(HttpContext context, HealthReport report)
     {
