@@ -44,6 +44,12 @@ app.MapHealthChecks("/health", new HealthCheckOptions()
     ResponseWriter = HealthCheckExtensions.WriteResponse
 });
 
+app.MapHealthChecks("/health/test", new HealthCheckOptions
+{
+    Predicate = healthCheck => healthCheck.Name == "test",
+    ResponseWriter = HealthCheckExtensions.WriteResponse
+});
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
