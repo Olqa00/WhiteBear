@@ -1,6 +1,3 @@
-using MediatR;
-using Microsoft.AspNetCore.HttpLogging;
-using Microsoft.AspNetCore.Mvc;
 using WhiteBear.Application;
 using WhiteBear.Application.Books.Commands;
 using WhiteBear.Application.Bookshelf.Queries;
@@ -8,16 +5,26 @@ using WhiteBear.Infrastructure;
 using WhiteBear.WebApi.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.AddEnvironmentVariables();
+
+#if Linux
+builder.Host.UseSystemd();
+#endif
+#if Windows
+builder.Host.UseWindowsService(options =>
+{
+    options.ServiceName = ServiceConstants.ServiceName;
+});
+#endif
 
 builder.Logging.AddSeq();
 builder.Services.AddHttpLogging(options =>
 {
-    options.LoggingFields = HttpLoggingFields.All;
+    options.LoggingFields = Microsoft.AspNetCore.HttpLogging.HttpLoggingFields.All;
     options.RequestBodyLogLimit = 1024 * 1024;
     options.ResponseBodyLogLimit = 1024 * 1024;
     options.CombineLogs = false;
 });
-
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
@@ -38,11 +45,8 @@ var app = builder.Build();
 
 app.UseHttpLogging();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseExceptionHandler();
 app.MapInfrastructure();
@@ -56,4 +60,14 @@ app.MapGet("/bookshelf", async ([FromServices] IMediator mediator,
         CancellationToken cancellationToken = default) => await mediator.Send(new GetBooksOnBookshelf(), cancellationToken))
     .WithName("GetBooks")
     .WithOpenApi();
+
+app.MapGet("/version", async (CancellationToken cancelationToken = default)  =>
+{
+    var productName = ServiceConstants.ServiceName;
+    var version = ServiceConstants.ServiceVersion;
+    var result = $"{productName}, version: {version}";
+
+    return await Task.FromResult(result);
+});
+
 await app.RunAsync();
