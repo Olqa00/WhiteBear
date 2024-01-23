@@ -1,5 +1,6 @@
 ﻿namespace WhiteBear.Infrastructure.EntityFrameworkCore;
 
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +20,7 @@ internal static class DependencyInjection
                 _=> Assembly.GetExecutingAssembly());
         });
 
+        services.AddHostedService<DatabaseInitializer>();
         services.AddScoped<IBookRepository, BookRepository>();
         services.AddScoped<IAuthorRepository, AuthorRepository>();
 
